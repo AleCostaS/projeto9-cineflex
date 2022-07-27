@@ -4,6 +4,7 @@ import axios from 'axios';
 import Menu from "./components/Menu";
 import Movies from "./components/Movies";
 import Session from "./components/Session";
+import Seats from "./components/Seats";
 
 export default function App() {
     const [movies, setMovies] = useState([]);
@@ -24,7 +25,9 @@ export default function App() {
                 {movies.map(movie => {
                     return <Route path={"/sessoes/"+movie.id} element={<Session movie={movie} />}/>
                 })}
-                
+                {movies.map(movie => {
+                    return <Route path={"/assentos/"+movie.id} element={<Seats movie={movie} />}/>
+                })}
             </Routes>
         </BrowserRouter>
     );
