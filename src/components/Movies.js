@@ -15,7 +15,6 @@ export default function Movies ({ movies }) {
                                 <div className='movieTitle'>{movie.title}</div>
                             </Link>
                         </>
-                        
                     );
                 })}
             </div>

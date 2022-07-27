@@ -22,12 +22,11 @@ export default function App() {
             <Menu />
             <Routes>
                 <Route path="/" element={<Movies movies={movies}/>}/>
-                {movies.map(movie => {
-                    return <Route path={"/sessoes/"+movie.id} element={<Session movie={movie} />}/>
-                })}
+                <Route path="/sessoes/:movieId" element={<Session movie={movies} />}/>
+               {/*  
                 {movies.map(movie => {
                     return <Route path={"/assentos/"+movie.id} element={<Seats movie={movie} />}/>
-                })}
+                })} */}
             </Routes>
         </BrowserRouter>
     );
