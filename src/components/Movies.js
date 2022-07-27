@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Movies ({ movies }) {
     return (
         <>
@@ -8,8 +10,10 @@ export default function Movies ({ movies }) {
                 {movies.map( movie => {
                     return (
                         <>
-                            <img src={movie.posterURL} ></img>
-                            <div className='movieTitle'>{movie.title}</div>
+                            <Link to={'/sessoes/'+movie.id}>
+                                <img src={movie.posterURL} ></img>
+                                <div className='movieTitle'>{movie.title}</div>
+                            </Link>
                         </>
                         
                     );

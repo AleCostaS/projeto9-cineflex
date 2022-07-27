@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Menu from "./components/Menu";
 import Movies from "./components/Movies";
+import Session from "./components/Session";
 
 export default function App() {
     const [movies, setMovies] = useState([]);
@@ -20,6 +21,10 @@ export default function App() {
             <Menu />
             <Routes>
                 <Route path="/" element={<Movies movies={movies}/>}/>
+                {movies.map(movie => {
+                    return <Route path={"/sessoes/"+movie.id} element={<Session movie={movie} />}/>
+                })}
+                
             </Routes>
         </BrowserRouter>
     );
