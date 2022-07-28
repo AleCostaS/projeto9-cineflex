@@ -12,7 +12,7 @@ export default function Movies ({ movies }) {
                     return (
                         <Link to={'/sessoes/'+movie.id}>
                             <Posters>
-                                <img src={movie.posterURL} ></img>
+                                <img src={movie.posterURL} alt=''></img>
                             </Posters>
                         </Link>
                     );
@@ -26,7 +26,6 @@ const Title = styled.div`
     margin-top: 67px;
     height: 110px;
     font-family: 'Roboto';
-    font-style: normal;
     font-weight: 400;
     font-size: 20px;
 
