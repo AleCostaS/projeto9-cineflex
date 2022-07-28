@@ -26,8 +26,8 @@ export default function App() {
                     <Menu />
                     <Routes>
                         <Route path="/" element={<Movies movies={movies}/>}/>
-                        <Route path="/sessoes/:movieId" element={<Session movie={movies} />}/>
-                        <Route path="/assentos/:sessionId" element={<Seats movie={movies} />}/>
+                        <Route path="/sessoes/:movieId" element={<Session />}/>
+                        <Route path="/assentos/:sessionId" element={<Seats />}/>
                     </Routes>
                 </BrowserRouter>
         </Fragment>

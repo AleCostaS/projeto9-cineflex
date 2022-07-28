@@ -3,17 +3,21 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function Session ({ movie }) {
+export default function Session () {
     const { movieId } = useParams();
     const [days, setDays] = useState([]);
+    const [movie, setMovie] = useState([]);
 
     useEffect(() => {
 		const requisition = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${movieId}/showtimes`);
 
         requisition.then(answer => {
             setDays(answer.data.days);
+            setMovie(answer.data);
         });
 	}, []);
+
+    console.log(movie)
 
     return (
         <>
@@ -38,9 +42,9 @@ export default function Session ({ movie }) {
 
             <Bottom>
                 <Posters>
-                    <img src={movie[movieId -1].posterURL} alt=''></img>    
+                    <img src={movie.posterURL} alt=''></img>    
                 </Posters>
-                <p>{movie[movieId -1].title}</p>
+                <p>{movie.title}</p>
             </Bottom>
         </>
     );
