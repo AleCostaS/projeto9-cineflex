@@ -1,21 +1,41 @@
 import styled from 'styled-components';
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function Seats ({ movie }) {
+export default function Seats () {
     const { sessionId } = useParams();
-    console.log(sessionId)
+    const [seats, setSeats] = useState([]);
+    const [movie, setMovie] = useState([]);
+    const [session, setSession] = useState([]);
+    const [hour, setHour] = useState([]);
+
+    useEffect(() => {
+		const requisition = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessionId}/seats`);
+
+        requisition.then(answer => {
+            setSeats(answer.data.seats);
+            setMovie(answer.data.movie);
+            setSession(answer.data.day);
+            setHour(answer.data.name);
+        });
+	}, []);
+
     return (
         <>
             <Title>
                 Selecione o(s) assento(s)
             </Title>
 
-            {/* <Bottom>
+            <Bottom>
                 <Posters>
-                    <img src={movie[movieId -1].posterURL} alt=''></img>    
+                    <img src={movie.posterURL} alt=''></img>    
                 </Posters>
-                <p>{movie[movieId -1].title}</p>
-            </Bottom> */}
+                <Info>
+                    <p>{movie.title}</p>
+                    <p>{session.weekday} - {hour}</p>
+                </Info>
+            </Bottom>
         </>
     );
 }
@@ -46,14 +66,6 @@ const Bottom = styled.div`
     position: fixed;
     bottom: 0;
     z-index: 2;
-
-    p {
-        font-family: 'Roboto';
-        font-weight: 400;
-        font-size: 20px;
-        color: #293845;
-        margin-left: 30px
-    }
 `;
 
 const Posters = styled.div`
@@ -72,5 +84,16 @@ const Posters = styled.div`
         border-radius: 3px;
 
         position: relative;
+    }
+`;
+
+const Info = styled.div`
+    p {
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 20px;
+        color: #293845;
+        margin-left: 30px;
+        margin-bottom: 10px;
     }
 `;
