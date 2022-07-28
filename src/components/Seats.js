@@ -27,6 +27,30 @@ export default function Seats () {
                 Selecione o(s) assento(s)
             </Title>
 
+            <Content>
+                {seats.map(seat => {
+                    console.log(seat);
+                    return (
+                        <>
+                            {seat.isAvailable ? (
+                                    <Seat>
+                                        <p>{seat.name}</p>
+                                    </Seat>
+                            ) : (
+                                    <Noseat>
+                                        <p>{seat.name}</p>
+                                    </Noseat>
+                            )}
+                        </>
+                    );
+                })}
+            </Content>
+                
+            <Options>
+                <Seat></Seat>
+                <Noseat></Noseat>
+            </Options>
+            
             <Bottom>
                 <Posters>
                     <img src={movie.posterURL} alt=''></img>    
@@ -96,4 +120,64 @@ const Info = styled.div`
         margin-left: 30px;
         margin-bottom: 10px;
     }
+`;
+
+const Seat = styled.div`
+    box-sizing: border-box;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    background-color: #C3CFD9;
+    margin-right: 2%;
+    margin-bottom: 4%;
+    border: 1px solid #808F9D;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+
+    p {
+        margin-left: 6px;
+    }
+`;
+
+const Noseat = styled.div`
+    box-sizing: border-box;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    background-color: #FBE192;
+    margin-right: 2%;
+    margin-bottom: 4%;
+    border: 1px solid #F7C52B;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+
+    p {
+        margin-left: 6px;
+    }
+`;
+
+const Content = styled.div`
+    height: 250px;
+    margin: 0 24px;
+    
+    display: flex;
+    flex-wrap: wrap;
+`;
+
+const Options = styled.div`
+    height: 100px
 `;
