@@ -11,6 +11,8 @@ export default function Seats () {
     const [hour, setHour] = useState([]);
     const [selecteds, setSelecteds] = useState(new Array(50).fill(true));
     const [refresh, setRefresh] = useState(false);
+    const [name, setName] = useState("");
+	const [cpf, setCpf] = useState("");
 
     useEffect(() => {
 		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
@@ -31,7 +33,6 @@ export default function Seats () {
 
             <Content refresh={refresh}>
                 {seats.map(seat => {
-                    
                     return (
                         <>
                             {seat.isAvailable ? (
@@ -88,10 +89,21 @@ export default function Seats () {
                     <Seat able={false}></Seat>
                     <p>Indisponível</p>   
                 </Option>
-                
-               
-               
             </Options>
+            
+            <Form>
+                <form >
+                    <p>Nome do comprador:</p>
+                    <input type="name" value={name} onChange={e => setName(e.target.value)} placeholder='Digite seu nome...'/>
+                    <p>CPF do comprador:</p>
+                    <input type="password" value={cpf} onChange={e => setCpf(e.target.value)} placeholder='Digite seu CPF...'/>
+                    
+                    <Button>
+                         <button type="submit">Reservar assento(s)</button>
+                    </Button>
+                </form>
+            </Form>
+           
             
             <Bottom>
                 <Posters>
@@ -207,7 +219,7 @@ const Content = styled.div`
 
 const Options = styled.div`
     height: 100px;
-    margin: 0 40px;
+    margin: 0 15%;
 
     display: flex;
     justify-content: space-between;
@@ -221,5 +233,53 @@ const Option = styled.div`
 
     p {
         font-size: 14px;
+    }
+`;
+
+const Form = styled.div`
+    margin-left: 10%;
+    
+    p {
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 85%;
+        height: 45px;
+        border: 1px solid #D5D5D5;
+        padding-left: 12px;
+        margin-bottom: 10px;
+    }
+
+    ::placeholder {
+        color: #D5D5D5;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 20px;
+    }
+
+    
+`;
+
+const Button = styled.div`
+    margin: 57px 10% 197px 0;
+    
+    display: flex;
+    justify-content: center;
+
+    button {
+        width: 213px;
+        height: 43px;
+        background-color: #E8833A;
+        border-radius: 3px;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 18px;
+        margin-bottom: 34px;
+        margin-right: 10px;
+        color: #FFFFFF;
+        cursor: pointer;
+        border-color: #E8833A;
+        box-shadow: none;
     }
 `;
