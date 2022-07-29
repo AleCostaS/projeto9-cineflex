@@ -11,7 +11,7 @@ export default function Seats () {
     const [hour, setHour] = useState([]);
 
     useEffect(() => {
-		const requisition = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessionId}/seats`);
+		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
 
         requisition.then(answer => {
             setSeats(answer.data.seats);
@@ -29,7 +29,6 @@ export default function Seats () {
 
             <Content>
                 {seats.map(seat => {
-                    console.log(seat);
                     return (
                         <>
                             {seat.isAvailable ? (

@@ -9,15 +9,13 @@ export default function Session () {
     const [movie, setMovie] = useState([]);
 
     useEffect(() => {
-		const requisition = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${movieId}/showtimes`);
+		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/movies/${movieId}/showtimes`);
 
         requisition.then(answer => {
             setDays(answer.data.days);
             setMovie(answer.data);
         });
 	}, []);
-
-    console.log(movie)
 
     return (
         <>
