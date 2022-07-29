@@ -49,15 +49,15 @@ export default function Session () {
 }
 
 const Title = styled.div`
-    margin-top: 67px;
-    height: 110px;
-    font-family: 'Roboto';
-    font-weight: 400;
-    font-size: 20px;
+margin-top: 67px;
+height: 110px;
+font-family: 'Roboto';
+font-weight: 400;
+font-size: 20px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+display: flex;
+align-items: center;
+justify-content: center;
 `;
 
 const Content = styled.div`

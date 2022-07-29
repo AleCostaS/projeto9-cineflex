@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import ReactSelect from 'react-select';
 import axios from 'axios';
 
 export default function Seats () {
@@ -10,6 +9,7 @@ export default function Seats () {
     const [movie, setMovie] = useState([]);
     const [session, setSession] = useState([]);
     const [hour, setHour] = useState([]);
+    const [selecteds, setSelecteds] = useState(new Array(50).fill(true));
 
     useEffect(() => {
 		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
@@ -21,7 +21,7 @@ export default function Seats () {
             setHour(answer.data.name);
         });
 	}, []);
-
+    
     return (
         <>
             <Title>
@@ -30,10 +30,18 @@ export default function Seats () {
 
             <Content>
                 {seats.map(seat => {
+                    console.log(selecteds[seat.name])
                     return (
                         <>
                             {seat.isAvailable ? (
-                                    <Seat able={seat.isAvailable} >
+                                    <Seat 
+                                        able={seat.isAvailable}
+                                        onClick={() => {
+                                            let arr = selecteds;
+                                            arr[seat.name] = false;
+                                            setSelecteds(arr);
+                                        }}
+                                        selected={selecteds[seat.name]} >
                                         <p>{seat.name}</p>
                                     </Seat>
                             ) : (
@@ -48,11 +56,11 @@ export default function Seats () {
                 
             <Options>
                 <Option>
-                    <Seat></Seat>
+                    <Seat able={true} selected={false}></Seat>
                     <p>Selecionado</p>   
                 </Option>
                 <Option>
-                    <Seat able={true}></Seat>
+                    <Seat able={true} selected={true}></Seat>
                     <p>Disponível</p>   
                 </Option>
                 <Option>
@@ -76,6 +84,7 @@ export default function Seats () {
         </>
     );
 }
+
 const Title = styled.div`
     margin-top: 67px;
     height: 110px;
@@ -144,10 +153,14 @@ const Seat = styled.div`
     border-radius: 50%;
     width: 26px;
     height: 26px;
-    background-color: ${props => props.able ? '#C3CFD9' : '#FBE192'};
+    background-color: ${props => props.able ? (
+        props.selected ?  '#C3CFD9' : '#8DD7CF'
+    ) : '#FBE192'};
     margin-right: 2%;
     margin-bottom: 4%;
-    border: 1px solid ${props => props.able ? '#808F9D' : '#F7C52B'};
+    border: 1px solid ${props => props.able ? (
+        props.selected ?  '#808F9D' : '#1AAE9E'
+    ) : '#F7C52B'};
     border-radius: 12px;
 
     display: flex;
@@ -156,6 +169,10 @@ const Seat = styled.div`
     
     p {
         margin-left: 6px;
+    }
+
+    &:hover {
+        filter: brightness(0.9);
     }
 `;
 
