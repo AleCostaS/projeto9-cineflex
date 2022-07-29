@@ -10,6 +10,7 @@ export default function Seats () {
     const [session, setSession] = useState([]);
     const [hour, setHour] = useState([]);
     const [selecteds, setSelecteds] = useState(new Array(50).fill(true));
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
 		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
@@ -21,31 +22,51 @@ export default function Seats () {
             setHour(answer.data.name);
         });
 	}, []);
-    
+
     return (
         <>
             <Title>
                 Selecione o(s) assento(s)
             </Title>
 
-            <Content>
+            <Content refresh={refresh}>
                 {seats.map(seat => {
-                    console.log(selecteds[seat.name])
+                    
                     return (
                         <>
                             {seat.isAvailable ? (
+                                !selecteds[seat.name -1] ? (
                                     <Seat 
                                         able={seat.isAvailable}
                                         onClick={() => {
                                             let arr = selecteds;
-                                            arr[seat.name] = false;
+                                            arr[seat.name -1] = !selecteds[seat.name -1];
                                             setSelecteds(arr);
+                                            setRefresh(!refresh);
                                         }}
-                                        selected={selecteds[seat.name]} >
+                                        selected={selecteds[seat.name -1]} >
                                         <p>{seat.name}</p>
                                     </Seat>
+                                ) : (
+                                    <Seat 
+                                        able={seat.isAvailable}
+                                        onClick={() => {
+                                            let arr = selecteds;
+                                            arr[seat.name -1] = !selecteds[seat.name -1];
+                                            setSelecteds(arr);
+                                            setRefresh(!refresh);
+                                        }}
+                                        selected={selecteds[seat.name -1]} >
+                                        <p>{seat.name}</p>
+                                    </Seat>
+                                )
                             ) : (
-                                    <Seat able={seat.isAvailable} >
+                                    <Seat 
+                                        able={seat.isAvailable}
+                                        onClick={() => {
+                                            alert('Esse assento não está disponível');
+                                        }}
+                                    >
                                         <p>{seat.name}</p>
                                     </Seat>
                             )}
