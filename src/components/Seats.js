@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import ReactSelect from 'react-select';
 import axios from 'axios';
 
 export default function Seats () {
@@ -32,13 +33,13 @@ export default function Seats () {
                     return (
                         <>
                             {seat.isAvailable ? (
-                                    <Seat>
+                                    <Seat able={seat.isAvailable} >
                                         <p>{seat.name}</p>
                                     </Seat>
                             ) : (
-                                    <Noseat>
+                                    <Seat able={seat.isAvailable} >
                                         <p>{seat.name}</p>
-                                    </Noseat>
+                                    </Seat>
                             )}
                         </>
                     );
@@ -46,8 +47,21 @@ export default function Seats () {
             </Content>
                 
             <Options>
-                <Seat></Seat>
-                <Noseat></Noseat>
+                <Option>
+                    <Seat></Seat>
+                    <p>Selecionado</p>   
+                </Option>
+                <Option>
+                    <Seat able={true}></Seat>
+                    <p>Disponível</p>   
+                </Option>
+                <Option>
+                    <Seat able={false}></Seat>
+                    <p>Indisponível</p>   
+                </Option>
+                
+               
+               
             </Options>
             
             <Bottom>
@@ -130,40 +144,16 @@ const Seat = styled.div`
     border-radius: 50%;
     width: 26px;
     height: 26px;
-    background-color: #C3CFD9;
+    background-color: ${props => props.able ? '#C3CFD9' : '#FBE192'};
     margin-right: 2%;
     margin-bottom: 4%;
-    border: 1px solid #808F9D;
+    border: 1px solid ${props => props.able ? '#808F9D' : '#F7C52B'};
     border-radius: 12px;
 
     display: flex;
     flex-direction: center;
     align-items: center;
-
-    p {
-        margin-left: 6px;
-    }
-`;
-
-const Noseat = styled.div`
-    box-sizing: border-box;
-    font-family: 'Roboto';
-    font-weight: 400;
-    font-size: 12px;
-    color: #000000;
-    border-radius: 50%;
-    width: 26px;
-    height: 26px;
-    background-color: #FBE192;
-    margin-right: 2%;
-    margin-bottom: 4%;
-    border: 1px solid #F7C52B;
-    border-radius: 12px;
-
-    display: flex;
-    flex-direction: center;
-    align-items: center;
-
+    
     p {
         margin-left: 6px;
     }
@@ -178,5 +168,20 @@ const Content = styled.div`
 `;
 
 const Options = styled.div`
-    height: 100px
+    height: 100px;
+    margin: 0 40px;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+`;
+
+const Option = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    p {
+        font-size: 14px;
+    }
 `;
