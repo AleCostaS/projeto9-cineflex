@@ -103,6 +103,7 @@ export default function Seats () {
                                                     }
                                                 });
                                             }
+                                            console.log(ids)
                                             setSelecteds(arr);
                                             setRefresh(!refresh);
                                         }}
@@ -140,21 +141,31 @@ export default function Seats () {
                 </Option>
             </Options>
             
-            <Form>
-                <form onSubmit={sendSeats}>
-                    <p>Nome do comprador:</p>
-                    <input type="name" name='name' onChange={handleForm} value={form.name} placeholder='Digite seu nome...'/>
-                    <p>CPF do comprador:</p>
-                    <input type="text" name='cpf' onChange={handleForm} value={form.cpf} placeholder='Digite seu CPF...'/>
-                    
-                    <Button>
-                        <Link to={form.name !== '' && form.cpf  !== '' ? '/sucesso/' : ''}>
-                            <button type="submit">Reservar assento(s)</button>
-                        </Link>
-                    </Button>
-                    
-                </form>
-            </Form>
+           
+                    <Form>
+                        <form onSubmit={sendSeats}> 
+                            {ids.map(() => {
+                                return (
+                                    <>
+                                        <p>Nome do comprador:</p>
+                                        <input type="name" name='name' onChange={handleForm} value={form.name} placeholder='Digite seu nome...'/>
+                                        <p>CPF do comprador:</p>
+                                        <input type="text" name='cpf' onChange={handleForm} value={form.cpf} placeholder='Digite seu CPF...'/>
+                                    </>
+                                );
+                            })}
+                            <Button>
+                                <Link to={form.name !== '' && form.cpf  !== '' ? '/sucesso/' : ''}>
+                                    <button type="submit">Reservar assento(s)</button>
+                                </Link>
+                            </Button>
+                            
+                        </form>
+                    </Form>
+                
+                
+       
+            
            
             
             <Bottom>
@@ -314,7 +325,7 @@ const Form = styled.div`
 `;
 
 const Button = styled.div`
-    margin: 57px 10% 197px 0;
+    margin: 57px 10% 157px 0;
     
     display: flex;
     justify-content: center;
