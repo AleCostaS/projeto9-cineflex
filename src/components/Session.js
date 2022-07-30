@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function Session () {
+export default function Session ({ setMovieId }) {
     const { movieId } = useParams();
     const [days, setDays] = useState([]);
     const [movie, setMovie] = useState([]);

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 export default function Seats () {
@@ -9,10 +10,9 @@ export default function Seats () {
     const [movie, setMovie] = useState([]);
     const [session, setSession] = useState([]);
     const [hour, setHour] = useState([]);
+    const [ids, setIds] = useState([]);
     const [selecteds, setSelecteds] = useState(new Array(50).fill(true));
     const [refresh, setRefresh] = useState(false);
-    const [name, setName] = useState("");
-	const [cpf, setCpf] = useState("");
 
     useEffect(() => {
 		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
@@ -24,6 +24,36 @@ export default function Seats () {
             setHour(answer.data.name);
         });
 	}, []);
+   
+    const [form, setForm] = React.useState({
+        name: '',
+        cpf: '',
+    });
+
+    function handleForm (e) {
+        setForm({
+          ...form,
+          [e.target.name]: e.target.value,
+        })
+
+        let compradores = [];
+
+        ids.map(id => compradores =[...compradores, {
+            idAssento: id,
+            name: form.name,
+            cpf: form.cpf,
+        }]);
+
+        const message = {
+            ids: ids,
+            compradores: compradores,
+        }
+        console.log(message)
+      }
+
+    function sendSeats () {
+        console.log(form)
+	}
 
     return (
         <>
@@ -42,6 +72,16 @@ export default function Seats () {
                                         onClick={() => {
                                             let arr = selecteds;
                                             arr[seat.name -1] = !selecteds[seat.name -1];
+                                            if (arr[seat.name -1] === false) {
+                                                setIds([...ids, seat.id])
+                                            } else {
+                                                ids.map((id, index) => {
+                                                    if (id === seat.id){
+                                                        ids.splice(index, 1);
+                                                    }
+                                                });
+                                            }
+                                            console.log(ids)
                                             setSelecteds(arr);
                                             setRefresh(!refresh);
                                         }}
@@ -54,6 +94,15 @@ export default function Seats () {
                                         onClick={() => {
                                             let arr = selecteds;
                                             arr[seat.name -1] = !selecteds[seat.name -1];
+                                             if (arr[seat.name -1] === false) {
+                                                setIds([...ids, seat.id])
+                                            } else {
+                                                ids.map((id, index) => {
+                                                    if (id === seat.id){
+                                                        ids.splice(index, 1);
+                                                    }
+                                                });
+                                            }
                                             setSelecteds(arr);
                                             setRefresh(!refresh);
                                         }}
@@ -92,15 +141,18 @@ export default function Seats () {
             </Options>
             
             <Form>
-                <form >
+                <form onSubmit={sendSeats}>
                     <p>Nome do comprador:</p>
-                    <input type="name" value={name} onChange={e => setName(e.target.value)} placeholder='Digite seu nome...'/>
+                    <input type="name" name='name' onChange={handleForm} value={form.name} placeholder='Digite seu nome...'/>
                     <p>CPF do comprador:</p>
-                    <input type="password" value={cpf} onChange={e => setCpf(e.target.value)} placeholder='Digite seu CPF...'/>
+                    <input type="text" name='cpf' onChange={handleForm} value={form.cpf} placeholder='Digite seu CPF...'/>
                     
                     <Button>
-                         <button type="submit">Reservar assento(s)</button>
+                        <Link to={form.name !== '' && form.cpf  !== '' ? '/sucesso/' : ''}>
+                            <button type="submit">Reservar assento(s)</button>
+                        </Link>
                     </Button>
+                    
                 </form>
             </Form>
            

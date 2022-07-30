@@ -7,6 +7,7 @@ export default function Movies ({ movies }) {
             <Title>
                 Selecione o filme
             </Title>
+            
             <Content>
                 {movies.map( movie => {
                     return (
