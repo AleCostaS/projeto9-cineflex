@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 
-export default function Seats () {
+export default function Seats ({ setObject }) {
     const { sessionId } = useParams();
     const [seats, setSeats] = useState([]);
     const [movie, setMovie] = useState([]);
@@ -56,12 +56,18 @@ export default function Seats () {
         setMessage({
             ids: ids,
             compradores: compradores,
-        })
+        });
+
+        setObject({
+            ids: ids,
+            compradores: compradores,
+        });
       }
 
     function sendSeats () {
-        axios.post(`https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many`, message);    
-        navigate('/sucesso/');
+        /* axios.post(`https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many`, message); */
+
+        navigate(`/sucesso/`);
 	}
 
     return (
@@ -94,7 +100,7 @@ export default function Seats () {
                                             setRefresh(!refresh);
                                         }}
                                         selected={selecteds[seat.name -1]} >
-                                        <p>{seat.name}</p>
+                                        <p>{seat.name <= 9 ? '0'+seat.name : seat.name}</p>
                                     </Seat>
                                 ) : (
                                     <Seat 
@@ -115,7 +121,7 @@ export default function Seats () {
                                             setRefresh(!refresh);
                                         }}
                                         selected={selecteds[seat.name -1]} >
-                                        <p>{seat.name}</p>
+                                        <p>{seat.name <= 9 ? '0'+seat.name : seat.name}</p>
                                     </Seat>
                                 )
                             ) : (
@@ -125,7 +131,7 @@ export default function Seats () {
                                             alert('Esse assento não está disponível');
                                         }}
                                     >
-                                        <p>{seat.name}</p>
+                                        <p>{seat.name <= 9 ? '0'+seat.name : seat.name}</p>
                                     </Seat>
                             )}
                         </>

@@ -9,7 +9,7 @@ import Sucess from "./components/Sucess";
 import { Fragment } from "react/cjs/react.production.min";
 
 export default function App() {
-    const [message, setMessage] = useState({});
+    const [object, setObject] = useState({});
 
     return (
         <Fragment>
@@ -19,8 +19,8 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<Movies />}/>
                         <Route path="/sessoes/:movieId" element={<Session />}/>
-                        <Route path="/assentos/:sessionId" element={<Seats setMessage={(e) => setMessage(e)} />}/>
-                        <Route path="/sucesso/" element={<Sucess message={message}/>}/>
+                        <Route path="/assentos/:sessionId" element={<Seats setObject={(e) => setObject(e)} />}/>
+                        <Route path="/sucesso/" element={<Sucess object={object}/>}/>
                     </Routes>
                 </BrowserRouter>
         </Fragment>
