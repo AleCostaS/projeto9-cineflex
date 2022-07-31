@@ -30,17 +30,10 @@ export default function Seats ({ setObject }) {
         });
 	}, []);
    
-   
-
-    function handleForm (e) {
+    useEffect(() => {
         let compradores = [];
         let i = 0;
-        
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-        })
-        
+
         ids.map(id => {
             compradores = [...compradores, {
                     idAssento: id,
@@ -68,6 +61,13 @@ export default function Seats ({ setObject }) {
             hour:hour,
             seats: seatsNum,
             compradores: compradores,
+        });
+    }, [form]);
+
+    function handleForm (e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
         });
     }
 
