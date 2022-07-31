@@ -97,11 +97,13 @@ export default function Seats ({ setObject }) {
                                             if (arr[seat.name -1] === false) {
                                                 setIds([...ids, seat.id])
                                             } else {
-                                                ids.map((id, index) => {
-                                                    if (id === seat.id){
-                                                        ids.splice(index, 1);
-                                                    }
-                                                });
+                                                {window.confirm('Gostaria realmente de remover o assento e apagar os dados?') === true ? (
+                                                    ids.map((id, index) => {
+                                                        if (id === seat.id){
+                                                            ids.splice(index, 1);
+                                                        }
+                                                    })
+                                                ) : (arr[seat.name -1] = !selecteds[seat.name -1])}
                                             }
                                             setSelecteds(arr);
                                             setRefresh(!refresh);
@@ -118,11 +120,13 @@ export default function Seats ({ setObject }) {
                                              if (arr[seat.name -1] === false) {
                                                 setIds([...ids, seat.id])
                                             } else {
-                                                ids.map((id, index) => {
-                                                    if (id === seat.id){
-                                                        ids.splice(index, 1);
-                                                    }
-                                                });
+                                                {window.confirm('Gostaria realmente de remover o assento e apagar os dados?') === true ? (
+                                                    ids.map((id, index) => {
+                                                        if (id === seat.id){
+                                                            ids.splice(index, 1);
+                                                        }
+                                                    })
+                                                ) : (arr[seat.name -1] = !selecteds[seat.name -1])}
                                             }
                                             setSelecteds(arr);
                                             setRefresh(!refresh);
