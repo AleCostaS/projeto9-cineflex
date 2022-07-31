@@ -1,8 +1,19 @@
 import styled from 'styled-components';
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Menu () {
+    let navigate = useNavigate();
+    const location = useLocation();
+
+    const returnPage = () => {
+        navigate(-1);
+    }; 
+
     return (
         <Upper>
+            {location.pathname === '/' ? (<></>) : (
+                <ion-icon name="arrow-back-outline" onClick={returnPage}></ion-icon>
+            )}
             CINEFLEX
         </Upper>
     );
@@ -24,4 +35,9 @@ const Upper = styled.div`
     position: fixed;
     top: 0;
     z-index: 2;
+
+    ion-icon {
+        position: fixed;
+        left: 10px;
+    }
 `;
