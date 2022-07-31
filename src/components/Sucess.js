@@ -3,8 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import message from './Seats'
 
-export default function Sucess ({ movies }) {
-    console.log(movies)
+export default function Sucess () {
     return (
         <>
             <Title>

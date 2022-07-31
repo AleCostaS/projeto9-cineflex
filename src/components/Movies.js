@@ -1,7 +1,19 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-export default function Movies ({ movies }) {
+export default function Movies () {
+    const [movies, setMovies] = useState([]);
+    
+    useEffect(() => {
+		const requisition = axios.get('https://mock-api.driven.com.br/api/v7/cineflex/movies');
+
+        requisition.then(answer => {
+            setMovies(answer.data);
+        });
+	}, []);
+
     return (
         <>
             <Title>

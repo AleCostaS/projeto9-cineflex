@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import React from 'react';
 import axios from 'axios';
+
+
 
 export default function Seats () {
     const { sessionId } = useParams();
@@ -14,6 +16,8 @@ export default function Seats () {
     const [selecteds, setSelecteds] = useState(new Array(50).fill(true));
     const [refresh, setRefresh] = useState(false);
     const [form, setForm] = React.useState({});
+    const [message, setMessage] = React.useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
 		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
@@ -49,15 +53,15 @@ export default function Seats () {
             i+=2;
         });
 
-        const message = {
+        setMessage({
             ids: ids,
             compradores: compradores,
-        }
-        console.log(message)
+        })
       }
 
     function sendSeats () {
-        console.log(form)
+        axios.post(`https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many`, message);    
+        navigate('/sucesso/');
 	}
 
     return (
@@ -86,7 +90,6 @@ export default function Seats () {
                                                     }
                                                 });
                                             }
-                                            console.log(ids)
                                             setSelecteds(arr);
                                             setRefresh(!refresh);
                                         }}
@@ -108,7 +111,6 @@ export default function Seats () {
                                                     }
                                                 });
                                             }
-                                            console.log(ids)
                                             setSelecteds(arr);
                                             setRefresh(!refresh);
                                         }}
@@ -146,36 +148,28 @@ export default function Seats () {
                 </Option>
             </Options>
             
-           
-                    <Form>
-                        <form onSubmit={sendSeats}> 
-                            {ids.map(id => {
-                                return (
-                                    <>
-                                        <p>Nome do comprador:</p>
-                                        <input type="name" name={'nome'+id} onChange={handleForm} value={form.name} placeholder='Digite seu nome...'/>
-                                        <p>CPF do comprador:</p>
-                                        <input type="text" name={'cpf'+id} onChange={handleForm} value={form.cpf} placeholder='Digite seu CPF...'/>
-                                    </>
-                                );
-                            })}
-                            {ids.length === 0 ? <></> :(
-                            <Button>
-                                <Link to={form.name !== '' && form.cpf  !== '' ? '/sucesso/' : ''}>
-                                    <button type="submit">Reservar assento(s)</button>
-                                </Link>
-                            </Button>
-                            ) }
-                           
-                            
-                        </form>
-                    </Form>
+            <Form>
+                <form onSubmit={sendSeats}> 
+                    {ids.map(id => {
+                        return (
+                            <>
+                                <p>Nome do comprador:</p>
+                                <input type="name" name={'nome'+id} onChange={handleForm} value={form.name} placeholder='Digite seu nome...'/>
+                                <p>CPF do comprador:</p>
+                                <input type="text" name={'cpf'+id} onChange={handleForm} value={form.cpf} placeholder='Digite seu CPF...'/>
+                            </>
+                        );
+                    })}
+                    {ids.length === 0 ? <></> :(
+                    <Button>
+                        <button type="submit">Reservar assento(s)</button>
+                    </Button>
+                    ) }
+                    
+                    
+                </form>
+            </Form>
                 
-                
-       
-            
-           
-            
             <Bottom>
                 <Posters>
                     <img src={movie.posterURL} alt=''></img>    
