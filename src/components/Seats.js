@@ -72,7 +72,7 @@ export default function Seats ({ setObject }) {
     }
 
     function sendSeats () {
-        /* axios.post(`https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many`, message); */
+        axios.post(`https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many`, message);
 
         navigate(`/sucesso/`);
 	}
