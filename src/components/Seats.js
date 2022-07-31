@@ -25,10 +25,7 @@ export default function Seats () {
         });
 	}, []);
    
-    const [form, setForm] = React.useState({
-        name: '',
-        cpf: '',
-    });
+    const [form, setForm] = React.useState({});
 
     function handleForm (e) {
         setForm({
@@ -154,11 +151,14 @@ export default function Seats () {
                                     </>
                                 );
                             })}
+                            {ids.length === 0 ? <></> :(
                             <Button>
                                 <Link to={form.name !== '' && form.cpf  !== '' ? '/sucesso/' : ''}>
                                     <button type="submit">Reservar assento(s)</button>
                                 </Link>
                             </Button>
+                            ) }
+                           
                             
                         </form>
                     </Form>
