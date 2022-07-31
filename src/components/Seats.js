@@ -33,16 +33,14 @@ export default function Seats ({ setObject }) {
    
 
     function handleForm (e) {
-        
         let compradores = [];
-
+        let i = 0;
+        
         setForm({
             ...form,
             [e.target.name]: e.target.value,
         })
-
-        let i = 0;
-
+        
         ids.map(id => {
             compradores = [...compradores, {
                     idAssento: id,
@@ -58,11 +56,20 @@ export default function Seats ({ setObject }) {
             compradores: compradores,
         });
 
+        let seatsNum = [];
+        
+        ids.map(id => {
+            seatsNum = [...seatsNum ,id%50];
+        });
+        
         setObject({
-            ids: ids,
+            title:movie.title,
+            weekday:session.weekday,
+            hour:hour,
+            seats: seatsNum,
             compradores: compradores,
         });
-      }
+    }
 
     function sendSeats () {
         /* axios.post(`https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many`, message); */
