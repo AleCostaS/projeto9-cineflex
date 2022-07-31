@@ -13,6 +13,7 @@ export default function Seats () {
     const [ids, setIds] = useState([]);
     const [selecteds, setSelecteds] = useState(new Array(50).fill(true));
     const [refresh, setRefresh] = useState(false);
+    const [form, setForm] = React.useState({});
 
     useEffect(() => {
 		const requisition = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
@@ -25,21 +26,28 @@ export default function Seats () {
         });
 	}, []);
    
-    const [form, setForm] = React.useState({});
+   
 
     function handleForm (e) {
-        setForm({
-          ...form,
-          [e.target.name]: e.target.value,
-        })
-
+        
         let compradores = [];
 
-        ids.map(id => compradores =[...compradores, {
-            idAssento: id,
-            name: form.name,
-            cpf: form.cpf,
-        }]);
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+
+        let i = 0;
+
+        ids.map(id => {
+            compradores = [...compradores, {
+                    idAssento: id,
+                    name: Object.values(form)[i],
+                    cpf: Object.values(form)[i+1],
+            }];
+
+            i+=2;
+        });
 
         const message = {
             ids: ids,
@@ -141,13 +149,13 @@ export default function Seats () {
            
                     <Form>
                         <form onSubmit={sendSeats}> 
-                            {ids.map(() => {
+                            {ids.map(id => {
                                 return (
                                     <>
                                         <p>Nome do comprador:</p>
-                                        <input type="name" name='name' onChange={handleForm} value={form.name} placeholder='Digite seu nome...'/>
+                                        <input type="name" name={'nome'+id} onChange={handleForm} value={form.name} placeholder='Digite seu nome...'/>
                                         <p>CPF do comprador:</p>
-                                        <input type="text" name='cpf' onChange={handleForm} value={form.cpf} placeholder='Digite seu CPF...'/>
+                                        <input type="text" name={'cpf'+id} onChange={handleForm} value={form.cpf} placeholder='Digite seu CPF...'/>
                                     </>
                                 );
                             })}
